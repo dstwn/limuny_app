@@ -1,11 +1,14 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:dio/src/options.dart' as Opt;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserRepository {
   static String mainUrl = "http://limuny.infiniteuny.id";
   var loginUrl = '$mainUrl/api/login';
+  var profileUrl = '$mainUrl/api/profile';
+  var registerUrl = '$mainUrl/api/register';
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
@@ -35,5 +38,52 @@ class UserRepository {
     } else {
       return null;
     }
+  }
+
+  Future<String?> register(
+    String name,
+    String email,
+    String password,
+    String password_c,
+    String nim,
+    String nik,
+    String major,
+    String phone,
+  ) async {
+    Response response = await _dio.post(registerUrl,
+        data: {
+          "name": name,
+          "email": email,
+          "password": password,
+          "password_confirmation": password_c,
+          "nim": nim,
+          "nik": nik,
+          "major": major,
+          "phone": phone
+        },
+        options: Opt.Options(
+            followRedirects: false,
+            validateStatus: (status) {
+              return status < 500;
+            }));
+    log(response.data.toString());
+    if (response.statusCode == 201) {
+      persistToken(response.data['data']['token']);
+      return response.data['data']['token'];
+    } else {
+      return null;
+    }
+  }
+
+  Future<String> getUserToken() async {
+    String token = await storage.read(key: 'token');
+    return token;
+  }
+
+  Future<String?> getUser() async {
+    String userToken = getUserToken() as String;
+    _dio.options.headers["authorization"] = 'Bearer $userToken';
+    Response response = await _dio.post(profileUrl);
+    return response.data['data'];
   }
 }

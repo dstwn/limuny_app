@@ -1,10 +1,14 @@
 import 'package:limuny/bloc/login/login_bloc.dart';
+import 'package:limuny/bloc/register/register_bloc.dart';
+import 'package:limuny/bloc/register/register_state.dart';
 import 'package:limuny/repositories/user_repositories.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:limuny/styles/theme.dart' as Style;
+import 'package:limuny/ui/auth/register/register_form.dart';
+import 'package:limuny/ui/auth/register/register_screen.dart';
 
 class LoginForm extends StatefulWidget {
   final UserRepository userRepository;
@@ -203,7 +207,7 @@ class _LoginFormState extends State<LoginForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Or connect using",
+                        "Or Sign Up",
                         style: TextStyle(color: Colors.black26, fontSize: 12.0),
                       ),
                     ],
@@ -211,68 +215,55 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 40.0,
-                        width: 180.0,
-                        child: RaisedButton(
-                            color: Color(0xFF385c8e),
-                            disabledColor: Style.Colors.mainColor,
-                            disabledTextColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            onPressed: _onLoginButtonPressed,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  EvaIcons.facebook,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Text("Facebook",
-                                    style: new TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
-                            )),
-                      ),
-                      Container(
-                        width: 180.0,
-                        height: 40.0,
-                        child: RaisedButton(
-                            color: Color(0xFFf14436),
-                            disabledColor: Style.Colors.mainColor,
-                            disabledTextColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            onPressed: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  EvaIcons.google,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Text("Google",
-                                    style: new TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
-                            )),
-                      ),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        SizedBox(
+                            height: 45,
+                            child: state is RegisterLoading
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Center(
+                                          child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: 25.0,
+                                            width: 25.0,
+                                            child: CupertinoActivityIndicator(),
+                                          )
+                                        ],
+                                      ))
+                                    ],
+                                  )
+                                : RaisedButton(
+                                    color: Style.Colors.mainColor,
+                                    disabledColor: Style.Colors.mainColor,
+                                    disabledTextColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    onPressed: () => {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return RegisterScreen(
+                                                userRepository: userRepository);
+                                          }))
+                                        },
+                                    child: Text("Sign Up",
+                                        style: new TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white)))),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 40.0,
@@ -294,13 +285,14 @@ class _LoginFormState extends State<LoginForm> {
                                 padding: EdgeInsets.only(right: 5.0),
                               ),
                               GestureDetector(
-                                  onTap: () {},
-                                  child: Text(
-                                    "Register",
-                                    style: TextStyle(
-                                        color: Style.Colors.mainColor,
-                                        fontWeight: FontWeight.bold),
-                                  ))
+                                onTap: () {},
+                                child: Text(
+                                  "REGISTER",
+                                  style: TextStyle(
+                                      color: Style.Colors.mainColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
                             ],
                           )),
                     ),
