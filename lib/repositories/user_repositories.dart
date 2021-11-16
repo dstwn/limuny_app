@@ -1,14 +1,18 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:dio/src/options.dart' as Opt;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:limuny/model/UserMode.dart';
+import 'package:limuny/provider/user_provider.dart';
 
 class UserRepository {
   static String mainUrl = "http://limuny.infiniteuny.id";
   var loginUrl = '$mainUrl/api/login';
   var profileUrl = '$mainUrl/api/profile';
   var registerUrl = '$mainUrl/api/register';
+  final _userProvider = UserProvider();
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
@@ -80,10 +84,9 @@ class UserRepository {
     return token;
   }
 
-  Future<String?> getUser() async {
-    String userToken = getUserToken() as String;
-    _dio.options.headers["authorization"] = 'Bearer $userToken';
-    Response response = await _dio.post(profileUrl);
-    return response.data['data'];
+  Future<User>? getUser() {
+    return _userProvider.fetchUser();
   }
 }
+
+class NetworkError extends Error {}
