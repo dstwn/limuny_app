@@ -1,9 +1,13 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:limuny/bloc/auth/auth_bloc.dart';
+import 'package:limuny/bloc/auth/auth_event.dart';
 import 'package:limuny/bloc/profile/profile_bloc.dart';
 import 'package:limuny/bloc/profile/profile_event.dart';
 import 'package:limuny/bloc/profile/profile_state.dart';
 import 'package:limuny/model/UserMode.dart';
+import 'package:limuny/styles/theme.dart' as Style;
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -23,6 +27,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        actions: [
+          IconButton(
+              icon: Icon(
+                EvaIcons.logOutOutline,
+                color: Style.Colors.colorWhite,
+              ),
+              onPressed: () {
+                BlocProvider.of<AuthenticationBloc>(context).add(
+                  LoggedOut(),
+                );
+              })
+        ],
       ),
       body: _buildProfile(),
     );
@@ -64,7 +80,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildLoading() => Center(child: CircularProgressIndicator());
   Widget _buildLoaded(BuildContext context, User user) {
     return Center(
-      child: Text(user.name),
+      child: Text(
+          "nama : ${user.name}, email : ${user.email}, nim : ${user.nim}, nik: ${user.nik}, phone : ${user.phone}, major : ${user.major}"),
     );
   }
 }

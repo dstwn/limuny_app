@@ -17,14 +17,7 @@ class _MainScreenState extends State<MainScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Style.Colors.colorWhite,
-          leading: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  "https://yt3.ggpht.com/yti/ANoDKi5R5eJSjZigdWmIcZKFAtqwG4svMcAAN0Iyvw4j=s108-c-k-c0x00ffffff-no-rj"),
-            ),
-          ),
-          title: Text(
+          title: const Text(
             "LIMUNY APPS",
             style: TextStyle(
                 color: Style.Colors.mainColor,
@@ -34,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
           actions: [
             IconButton(
                 icon: Icon(
-                  EvaIcons.logOutOutline,
+                  EvaIcons.personOutline,
                   color: Style.Colors.mainColor,
                 ),
                 onPressed: () {
@@ -48,8 +41,71 @@ class _MainScreenState extends State<MainScreen> {
                 })
           ],
         ),
-        body: Center(
-          child: Text("Main Screen"),
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 200,
+          decoration: BoxDecoration(
+            color: Style.Colors.colorWhite,
+          ),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+            child: Card(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              color: Style.Colors.mainColor,
+              elevation: 1,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional(0, -1),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(30, 30, 30, 30),
+                      child: Text('Masuk ke Gedung atau Ruang Kelas ?',
+                          style: TextStyle(
+                              color: Style.Colors.colorWhite,
+                              fontSize: 21.0,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(-0.8, 0.60),
+                    child: RaisedButton(
+                      color: Style.Colors.orange, // background
+                      textColor: Colors.white, // foreground
+                      onPressed: () {},
+                      child: Text('Check-In'),
+                    ),
+                    // child: FFButtonWidget(
+                    //   onPressed: () {
+                    //     print('Button pressed ...');
+                    //   },
+                    //   text: 'Check-In',
+                    //   icon: Icon(
+                    //     Icons.qr_code_rounded,
+                    //     size: 15,
+                    //   ),
+                    //   options: FFButtonOptions(
+                    //     width: 130,
+                    //     height: 40,
+                    //     color: FlutterFlowTheme.tertiaryColor,
+                    //     textStyle: FlutterFlowTheme.bodyText2.override(
+                    //       fontFamily: 'Open Sans',
+                    //     ),
+                    //     borderSide: BorderSide(
+                    //       color: Colors.transparent,
+                    //       width: 1,
+                    //     ),
+                    //     borderRadius: 100,
+                    //   ),
+                    //   loading: _loadingButton,
+                    // ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ));
   }
 }
