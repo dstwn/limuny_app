@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 class Colors {
   const Colors();
   static const Color colorWhite = const Color(0xFFFFFFFF);
-  static const Color mainColor = const Color(0xFF6584f7);
+  static const Color mainColor = const Color(0xFF4B39EF);
   static const Color background = const Color(0xFFf2f6ff);
   static const Color loginGradientStart = const Color(0xFF59499E);
   static const Color loginGradientEnd = const Color(0xFF59499E);

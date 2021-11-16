@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:limuny/model/UserMode.dart';
+import 'package:limuny/model/UserModel.dart';
 
 abstract class ProfileState extends Equatable {
   const ProfileState();

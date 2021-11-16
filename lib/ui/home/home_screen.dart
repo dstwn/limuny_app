@@ -3,6 +3,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:limuny/styles/theme.dart' as Style;
+import 'package:limuny/ui/place/checkin_scanner_screen.dart';
 import 'package:limuny/ui/profile/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -74,7 +75,11 @@ class _MainScreenState extends State<MainScreen> {
                     child: RaisedButton(
                       color: Style.Colors.orange, // background
                       textColor: Colors.white, // foreground
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const CheckInScanner(),
+                        ));
+                      },
                       child: Text('Check-In'),
                     ),
                     // child: FFButtonWidget(
