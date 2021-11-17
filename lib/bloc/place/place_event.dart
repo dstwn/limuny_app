@@ -20,3 +20,10 @@ class CheckIn extends PlaceEvent {
   // TODO: implement props
   List<Object>? get props => [uuid];
 }
+
+class CheckOut extends PlaceEvent {
+  const CheckOut();
+  @override
+  // TODO: implement props
+  List<Object>? get props => [];
+}

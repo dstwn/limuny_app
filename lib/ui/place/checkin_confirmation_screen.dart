@@ -4,6 +4,7 @@ import 'package:limuny/bloc/place/place_bloc.dart';
 import 'package:limuny/bloc/place/place_event.dart';
 import 'package:limuny/bloc/place/place_state.dart';
 import 'package:limuny/model/CheckInModel.dart';
+import 'package:limuny/model/CheckOutModel.dart';
 import 'package:limuny/model/PlaceModel.dart';
 import 'package:qr_code_scanner/src/types/barcode.dart';
 import 'package:limuny/styles/theme.dart' as Style;
@@ -57,9 +58,143 @@ class _ConfirmationPlaceScreenState extends State<ConfirmationPlaceScreen> {
                 return _buildLoading();
               } else if (state is CheckInLoaded) {
                 return _checkInLoaded(context, state.checkin);
+              } else if (state is CheckOutInitial) {
+                return _buildLoading();
+              } else if (state is CheckOutLoading) {
+                return _buildLoading();
+              } else if (state is CheckOutLoaded) {
+                return _checkOutLoaded(context, state.checkOutModel);
               }
               return _buildLoading();
             },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _checkOutLoaded(BuildContext context, CheckOutModel checkOutModel) {
+    return Scaffold(
+      backgroundColor: Style.Colors.colorWhite,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      color: Style.Colors.titleColor,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: IconButton(
+                        // borderColor: Colors.transparent,
+                        // borderRadius: 30,
+                        // buttonSize: 46,
+                        icon: Icon(
+                          Icons.close_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                child: Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  color: Style.Colors.mainColor,
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(70),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(30, 30, 30, 30),
+                    child: Icon(
+                      Icons.check_outlined,
+                      color: Colors.white,
+                      size: 60,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                child: Text(
+                  checkOutModel.status,
+                  style: TextStyle(
+                    fontFamily: 'Lexend Deca',
+                    color: Style.Colors.mainColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(24, 8, 24, 0),
+                child: Chip(
+                  labelPadding: EdgeInsets.all(2.0),
+                  label: Text(
+                    checkOutModel.message,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  backgroundColor: Style.Colors.orange,
+                  elevation: 0.0,
+                  shadowColor: Colors.grey[60],
+                  padding: EdgeInsets.all(10.0),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(24, 8, 24, 0),
+                child: Text(
+                  'to check-in Location, don\'t forget to Wear a Mask, keep social distancing',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Lexend Deca',
+                    color: Color(0xFF8B97A2),
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+              // Expanded(
+              //   child: Padding(
+              //     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+              //     child: Column(
+              //       mainAxisSize: MainAxisSize.max,
+              //       mainAxisAlignment: MainAxisAlignment.end,
+              //       children: [
+              //         ElevatedButton(
+              //             onPressed: () => {
+              //                   BlocProvider.of<PlaceBloc>(context)
+              //                       .add(CheckOut()),
+              //                 },
+              //             child: Text("CHECK-OUT"),
+              //             style: ElevatedButton.styleFrom(
+              //               elevation: 0,
+              //               primary: Style.Colors.successGreen,
+              //               shape: StadiumBorder(),
+              //             ))
+              //       ],
+              //     ),
+              //   ),
+              // )
+            ],
           ),
         ),
       ),
@@ -327,8 +462,11 @@ class _ConfirmationPlaceScreenState extends State<ConfirmationPlaceScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                          onPressed: () => {},
-                          child: Text("CHECK-IN SUCCESS"),
+                          onPressed: () => {
+                                BlocProvider.of<PlaceBloc>(context)
+                                    .add((CheckOut()))
+                              },
+                          child: Text("CHECK-OUT"),
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             primary: Style.Colors.successGreen,

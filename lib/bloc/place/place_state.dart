@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:limuny/bloc/place/place_event.dart';
 import 'package:limuny/bloc/profile/profile_state.dart';
 import 'package:limuny/model/CheckInModel.dart';
+import 'package:limuny/model/CheckOutModel.dart';
 import 'package:limuny/model/PlaceModel.dart';
 
 abstract class PlaceState extends Equatable {
@@ -18,6 +19,12 @@ class PlaceInitial extends PlaceState {
 
 class CheckInInitial extends PlaceState {
   const CheckInInitial();
+  @override
+  List<Object> get props => [];
+}
+
+class CheckOutInitial extends PlaceState {
+  const CheckOutInitial();
   @override
   List<Object> get props => [];
 }
@@ -65,3 +72,12 @@ class PlaceLoaded extends PlaceState {
   @override
   List<Object> get props => [place];
 }
+
+class CheckOutLoaded extends PlaceState {
+  final CheckOutModel checkOutModel;
+  const CheckOutLoaded(this.checkOutModel);
+  @override
+  List<Object> get props => [checkOutModel];
+}
+
+class CheckOutLoading extends PlaceState {}
