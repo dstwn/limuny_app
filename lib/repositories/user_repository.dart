@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:dio/src/options.dart' as Opt;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:limuny/model/UserMode.dart';
+import 'package:limuny/model/UserModel.dart';
 import 'package:limuny/provider/user_provider.dart';
 
 class UserRepository {

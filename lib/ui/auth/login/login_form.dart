@@ -1,7 +1,7 @@
 import 'package:limuny/bloc/login/login_bloc.dart';
 import 'package:limuny/bloc/register/register_bloc.dart';
 import 'package:limuny/bloc/register/register_state.dart';
-import 'package:limuny/repositories/user_repositories.dart';
+import 'package:limuny/repositories/user_repository.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

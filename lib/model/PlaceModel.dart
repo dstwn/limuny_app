@@ -1,14 +1,15 @@
 class Place {
-  final String id;
+  final int id;
   final String name;
   final String uuid;
   final String place_image;
   final String type;
-  final String capacity;
-  final String quantity;
+  final String qr_image;
+  final int capacity;
+  final int quantity;
 
   Place(this.id, this.name, this.uuid, this.place_image, this.type,
-      this.capacity, this.quantity);
+      this.qr_image, this.capacity, this.quantity);
 
   Place.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -16,6 +17,7 @@ class Place {
         uuid = json['uuid'],
         place_image = json['place_image'],
         type = json['type'],
+        qr_image = json['qr_image'],
         capacity = json['capacity'],
         quantity = json['quantity'];
 
@@ -25,6 +27,7 @@ class Place {
         'uuid': uuid,
         'place_image': place_image,
         'type': type,
+        'qr_image': qr_image,
         'capacity': capacity,
         'quantity': quantity
       };

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:limuny/model/UserMode.dart';
+import 'package:limuny/model/UserModel.dart';
 
 class UserProvider {
   final Dio _dio = Dio();

@@ -1,5 +1,5 @@
 import 'package:limuny/bloc/auth/auth.dart';
-import 'package:limuny/repositories/user_repositories.dart';
+import 'package:limuny/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_event.dart';

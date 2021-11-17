@@ -6,7 +6,7 @@ import 'package:limuny/bloc/auth/auth_event.dart';
 import 'package:limuny/bloc/profile/profile_bloc.dart';
 import 'package:limuny/bloc/profile/profile_event.dart';
 import 'package:limuny/bloc/profile/profile_state.dart';
-import 'package:limuny/model/UserMode.dart';
+import 'package:limuny/model/UserModel.dart';
 import 'package:limuny/styles/theme.dart' as Style;
 
 class ProfileScreen extends StatefulWidget {

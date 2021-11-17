@@ -3,7 +3,7 @@ import 'package:limuny/bloc/auth/auth.dart';
 import 'package:limuny/bloc/auth/auth_bloc.dart';
 import 'package:limuny/bloc/register/register_event.dart';
 import 'package:limuny/bloc/register/register_state.dart';
-import 'package:limuny/repositories/user_repositories.dart';
+import 'package:limuny/repositories/user_repository.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final UserRepository userRepository;

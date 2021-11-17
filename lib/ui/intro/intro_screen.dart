@@ -1,4 +1,4 @@
-import 'package:limuny/repositories/user_repositories.dart';
+import 'package:limuny/repositories/user_repository.dart';
 import 'package:limuny/ui/auth/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

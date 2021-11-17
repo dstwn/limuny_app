@@ -1,6 +1,6 @@
 import 'package:limuny/bloc/auth/auth.dart';
 import 'package:limuny/bloc/auth/auth_bloc.dart';
-import 'package:limuny/repositories/user_repositories.dart';
+import 'package:limuny/repositories/user_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';

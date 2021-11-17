@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:limuny/bloc/profile/profile_event.dart';
 import 'package:limuny/bloc/profile/profile_state.dart';
-import 'package:limuny/repositories/user_repositories.dart';
+import 'package:limuny/repositories/user_repository.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UserRepository _userRepository = UserRepository();

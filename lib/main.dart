@@ -1,4 +1,4 @@
-import 'package:limuny/repositories/user_repositories.dart';
+import 'package:limuny/repositories/user_repository.dart';
 import 'package:limuny/ui/home/home_screen.dart';
 import 'package:limuny/ui/intro/intro_screen.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +53,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       locale: const Locale('mn', 'MN'),
       theme: ThemeData(
-          fontFamily: 'Rubik',
-          primarySwatch: Colors.blueGrey,
-          ),
+        fontFamily: 'Rubik',
+        primarySwatch: Colors.blueGrey,
+      ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
@@ -66,46 +66,48 @@ class MyApp extends StatelessWidget {
           }
           if (state is AuthenticationLoading) {
             return Scaffold(
-                body: Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 25.0,
-                        width: 25.0,
-                                          child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(Style.Colors.mainColor),
-          strokeWidth: 4.0,
-        ),
-                      )
-                    ],
-                  ),
+              body: Container(
+                color: Colors.white,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 25.0,
+                      width: 25.0,
+                      child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            Style.Colors.mainColor),
+                        strokeWidth: 4.0,
+                      ),
+                    )
+                  ],
                 ),
-              );
+              ),
+            );
           }
           return Scaffold(
-                body: Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 25.0,
-                        width: 25.0,
-                                          child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(Style.Colors.mainColor),
-          strokeWidth: 4.0,
-        ),
-                      )
-                    ],
-                  ),
-                ),
-              );
+            body: Container(
+              color: Colors.white,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 25.0,
+                    width: 25.0,
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          Style.Colors.mainColor),
+                      strokeWidth: 4.0,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
         },
       ),
     );
