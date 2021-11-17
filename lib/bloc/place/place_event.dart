@@ -12,3 +12,11 @@ class GetPlace extends PlaceEvent {
   // TODO: implement props
   List<Object>? get props => [uuid];
 }
+
+class CheckIn extends PlaceEvent {
+  final String uuid;
+  const CheckIn({required this.uuid});
+  @override
+  // TODO: implement props
+  List<Object>? get props => [uuid];
+}

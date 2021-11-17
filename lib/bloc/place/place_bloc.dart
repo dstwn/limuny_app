@@ -19,6 +19,14 @@ class PlaceBloc extends Bloc<PlaceEvent, PlaceState> {
       } on NetworkError {
         yield PlaceFailure(error: "Network Error");
       }
+    } else if (event is CheckIn) {
+      try {
+        yield CheckInLoading();
+        final _checkin = await _placeRepository.checkIn(event.uuid);
+        yield CheckInLoaded(_checkin!);
+      } on NetworkError {
+        yield CheckInFailure(error: "Network Error");
+      }
     }
   }
 }
