@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       locale: const Locale('mn', 'MN'),
       theme: ThemeData(
+        appBarTheme: AppBarTheme(brightness: Brightness.dark),
         fontFamily: 'Rubik',
         primarySwatch: Colors.blueGrey,
       ),

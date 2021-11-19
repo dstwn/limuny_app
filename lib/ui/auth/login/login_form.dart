@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:limuny/styles/theme.dart' as Style;
 import 'package:limuny/ui/auth/register/register_form.dart';
 import 'package:limuny/ui/auth/register/register_screen.dart';
+import 'package:limuny/widgets/custom_button.dart';
+import 'package:limuny/widgets/custom_checkbox.dart';
 
 class LoginForm extends StatefulWidget {
   final UserRepository userRepository;
@@ -25,6 +27,14 @@ class _LoginFormState extends State<LoginForm> {
   _LoginFormState(this.userRepository);
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  //password
+  bool passwordVisible = false;
+  void togglePassword() {
+    setState(() {
+      passwordVisible = !passwordVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,257 +60,217 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 80.0),
-            child: Form(
-              child: Column(
-                children: [
-                  Container(
-                      height: 200.0,
-                      padding: EdgeInsets.only(bottom: 20.0, top: 40.0),
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(24.0, 40.0, 24.0, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Login to your\naccount',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ).copyWith(color: Style.Colors.secondBlack),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        // Image.asset(
+                        //   'assets/images/accent.png',
+                        //   width: 99,
+                        //   height: 4,
+                        // ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 48,
+                    ),
+                    Form(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "LIMUNY",
-                            style: TextStyle(
-                                color: Style.Colors.mainColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24.0),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Style.Colors.textWhiteGrey,
+                              borderRadius: BorderRadius.circular(14.0),
+                            ),
+                            child: TextFormField(
+                              keyboardType: TextInputType.emailAddress,
+                              controller: _usernameController,
+                              decoration: InputDecoration(
+                                hintText: 'Email',
+                                hintStyle: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ).copyWith(color: Style.Colors.textGrey),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(
-                            height: 5.0,
+                            height: 32,
                           ),
-                          Text(
-                            "Lindungi Mahasiswa UNY",
-                            style: TextStyle(
-                                fontSize: 10.0, color: Colors.black38),
-                          )
-                        ],
-                      )),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  TextFormField(
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: Style.Colors.titleColor,
-                        fontWeight: FontWeight.bold),
-                    controller: _usernameController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      prefixIcon:
-                          Icon(EvaIcons.emailOutline, color: Colors.black26),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: new BorderSide(color: Colors.black12),
-                          borderRadius: BorderRadius.circular(30.0)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              new BorderSide(color: Style.Colors.mainColor),
-                          borderRadius: BorderRadius.circular(30.0)),
-                      contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
-                      labelText: "E-Mail",
-                      hintStyle: TextStyle(
-                          fontSize: 12.0,
-                          color: Style.Colors.grey,
-                          fontWeight: FontWeight.w500),
-                      labelStyle: TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    autocorrect: false,
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  TextFormField(
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: Style.Colors.titleColor,
-                        fontWeight: FontWeight.bold),
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      prefixIcon: Icon(
-                        EvaIcons.lockOutline,
-                        color: Colors.black26,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: new BorderSide(color: Colors.black12),
-                          borderRadius: BorderRadius.circular(30.0)),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              new BorderSide(color: Style.Colors.mainColor),
-                          borderRadius: BorderRadius.circular(30.0)),
-                      contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
-                      labelText: "Password",
-                      hintStyle: TextStyle(
-                          fontSize: 12.0,
-                          color: Style.Colors.grey,
-                          fontWeight: FontWeight.w500),
-                      labelStyle: TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    autocorrect: false,
-                    obscureText: true,
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: new InkWell(
-                        child: new Text(
-                          "Forget password?",
-                          style:
-                              TextStyle(color: Colors.black45, fontSize: 12.0),
-                        ),
-                        onTap: () {}),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        SizedBox(
-                            height: 45,
-                            child: state is LoginLoading
-                                ? Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Center(
-                                          child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: 25.0,
-                                            width: 25.0,
-                                            child: CupertinoActivityIndicator(),
-                                          )
-                                        ],
-                                      ))
-                                    ],
-                                  )
-                                : RaisedButton(
-                                    color: Style.Colors.mainColor,
-                                    disabledColor: Style.Colors.mainColor,
-                                    disabledTextColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    onPressed: _onLoginButtonPressed,
-                                    child: Text("LOG IN",
-                                        style: new TextStyle(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)))),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Or Sign Up",
-                        style: TextStyle(color: Colors.black26, fontSize: 12.0),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        SizedBox(
-                            height: 45,
-                            child: state is RegisterLoading
-                                ? Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Center(
-                                          child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: 25.0,
-                                            width: 25.0,
-                                            child: CupertinoActivityIndicator(),
-                                          )
-                                        ],
-                                      ))
-                                    ],
-                                  )
-                                : RaisedButton(
-                                    color: Style.Colors.mainColor,
-                                    disabledColor: Style.Colors.mainColor,
-                                    disabledTextColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    onPressed: () => {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return RegisterScreen(
-                                                userRepository: userRepository);
-                                          }))
-                                        },
-                                    child: Text("Sign Up",
-                                        style: new TextStyle(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white)))),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                          padding: EdgeInsets.only(bottom: 30.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "Don't have an account?",
-                                style: TextStyle(color: Style.Colors.grey),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(right: 5.0),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Text(
-                                  "REGISTER",
-                                  style: TextStyle(
-                                      color: Style.Colors.mainColor,
-                                      fontWeight: FontWeight.bold),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Style.Colors.textWhiteGrey,
+                              borderRadius: BorderRadius.circular(14.0),
+                            ),
+                            child: TextFormField(
+                              obscureText: !passwordVisible,
+                              controller: _passwordController,
+                              decoration: InputDecoration(
+                                hintText: 'Password',
+                                hintStyle: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ).copyWith(color: Style.Colors.textGrey),
+                                suffixIcon: IconButton(
+                                  color: Style.Colors.grey,
+                                  splashRadius: 1,
+                                  icon: Icon(passwordVisible
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined),
+                                  onPressed: togglePassword,
                                 ),
-                              )
-                            ],
-                          )),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  )
-                ],
+                    SizedBox(
+                      height: 32,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CustomCheckbox(),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text('Remember me',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w400)),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 32,
+                    ),
+                    SizedBox(
+                        child: state is LoginLoading
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 25.0,
+                                        width: 25.0,
+                                        child: CupertinoActivityIndicator(),
+                                      )
+                                    ],
+                                  ))
+                                ],
+                              )
+                            : Material(
+                                borderRadius: BorderRadius.circular(14.0),
+                                elevation: 0,
+                                child: Container(
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    color: Style.Colors.mainColor,
+                                    borderRadius: BorderRadius.circular(14.0),
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: RaisedButton(
+                                      color: Style.Colors.mainColor,
+                                      disabledColor: Style.Colors.textWhiteGrey,
+                                      disabledTextColor: Style.Colors.textGrey,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(14.0)),
+                                      onPressed: _onLoginButtonPressed,
+                                      child: Center(
+                                        child: Text(
+                                          "Login",
+                                          style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600)
+                                              .copyWith(
+                                                  color:
+                                                      Style.Colors.colorWhite),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    Center(
+                      child: Text(
+                        'OR',
+                        style:
+                            TextStyle(fontSize: 16, fontWeight: FontWeight.w600)
+                                .copyWith(color: Style.Colors.grey),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    CustomPrimaryButton(
+                      buttonColor: Style.Colors.titleColor,
+                      textValue: 'Login with SSO',
+                      textColor: Style.Colors.greyBack,
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account? ",
+                          style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400)
+                              .copyWith(color: Style.Colors.grey),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterScreen(
+                                          userRepository: userRepository,
+                                        )));
+                          },
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400)
+                                .copyWith(color: Style.Colors.mainColor),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );

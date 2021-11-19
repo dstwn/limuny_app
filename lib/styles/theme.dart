@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 
 class Colors {
   const Colors();
+  static const Color textBlack = const Color(0xff222222);
+  static const Color textGrey = const Color(0xff94959b);
+  static const Color textWhiteGrey = const Color(0xfff1f1f5);
   static const Color colorWhite = const Color(0xFFFFFFFF);
   static const Color mainColor = const Color(0xFF4B39EF);
   static const Color background = const Color(0xFFf2f6ff);
@@ -39,3 +42,23 @@ class Colors {
     end: Alignment.bottomRight,
   );
 }
+
+TextStyle heading2 = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.w700,
+);
+
+TextStyle heading5 = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+);
+
+TextStyle heading6 = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+);
+
+TextStyle regular16pt = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+);
