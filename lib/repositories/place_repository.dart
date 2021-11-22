@@ -19,4 +19,4 @@ class PlaceRepository {
   }
 }
 
-class NetworkError extends Error {}
+class PlaceNetworkError extends Error {}

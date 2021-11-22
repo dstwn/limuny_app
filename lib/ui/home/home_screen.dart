@@ -15,6 +15,12 @@ import 'package:limuny/ui/history/history_screen.dart';
 import 'package:limuny/ui/place/checkin_detail_screen.dart';
 import 'package:limuny/ui/place/checkin_scanner_screen.dart';
 import 'package:limuny/ui/profile/profile_screen.dart';
+import 'package:limuny/ui/shuttle/shuttle_screen.dart';
+
+final List<String> imgList = [
+  'https://ecs7.tokopedia.net/img/blog/promo/2020/06/Thumbnail3.jpg',
+  'https://media.21cineplex.com/webcontent/gallery/pictures/157767538487410_925x527.jpg',
+];
 
 class MainScreen extends StatefulWidget {
   @override
@@ -33,47 +39,61 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-              icon: Icon(
-                EvaIcons.repeatOutline,
-                color: Style.Colors.colorWhite,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: AppBar(
+          elevation: 0,
+          backgroundColor: Style.Colors.mainColor,
+          title: Container(
+            height: 50.0,
+            decoration: BoxDecoration(
+              color: Style.Colors.textWhiteGrey,
+              borderRadius: BorderRadius.circular(14.0),
+            ),
+            child: TextFormField(
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                hintText: 'Cari ...',
+                hintStyle: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ).copyWith(color: Style.Colors.textGrey),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
               ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PlaceHistoryScreen()));
-              }),
-          IconButton(
-              icon: Icon(
-                EvaIcons.personOutline,
-                color: Style.Colors.colorWhite,
-              ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()));
-              }),
-          IconButton(
-              icon: Icon(
-                EvaIcons.logOutOutline,
-                color: Style.Colors.colorWhite,
-              ),
-              onPressed: () {
-                BlocProvider.of<AuthenticationBloc>(context).add(
-                  LoggedOut(),
-                );
-              })
-        ],
+            ),
+          ),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+                icon: Icon(
+                  EvaIcons.clockOutline,
+                  color: Style.Colors.colorWhite,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PlaceHistoryScreen()));
+                }),
+            IconButton(
+                icon: Icon(
+                  EvaIcons.personOutline,
+                  color: Style.Colors.colorWhite,
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ProfileScreen()));
+                }),
+          ],
+        ),
       ),
-      body: _buildUserStatus(),
+      body: _buildHomeMenus(),
     );
   }
 
-  Widget _buildUserStatus() {
+  Widget _buildHomeMenus() {
     return Container(
       child: BlocProvider(
         create: (_) => _userStatusBloc,
@@ -95,9 +115,9 @@ class _MainScreenState extends State<MainScreen> {
                 return _buildLoading();
               } else if (state is UserStatusLoaded) {
                 if (state.user.name == 'name') {
-                  return _buildUserStatusLoaded(context, state.user, true);
+                  return _buildUserStatus(context, state.user, true);
                 } else {
-                  return _buildUserStatusLoaded(context, state.user, false);
+                  return _buildUserStatus(context, state.user, false);
                 }
               } else if (state is UserStatusFailure) {
                 return Container();
@@ -110,84 +130,343 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  Widget _buildUserStatus(
+      BuildContext context, UserStatusModel user, bool isCheckin) {
+    double widthSize = MediaQuery.of(context).size.width;
+    return Stack(
+      children: [
+        Column(children: [
+          Expanded(flex: 1, child: Container(color: Style.Colors.mainColor)),
+          Expanded(flex: 10, child: Container(color: Colors.white))
+        ]),
+        Positioned(
+          top: 0,
+          left: 10,
+          right: 10,
+          child: Column(
+            children: [
+              Container(
+                child: Column(
+                  children: [
+                    isCheckin
+                        ? Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14.0),
+                            ),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            color: Style.Colors.colorWhite,
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  14, 14, 14, 14),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, -1),
+                                    child: Text(
+                                      'Masuk ruang atau gedung ?',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Align(
+                                      alignment: AlignmentDirectional(-1, 0),
+                                      child: RaisedButton(
+                                        child: Text('Chek-In'),
+                                        onPressed: () {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CheckInScanner(),
+                                          ));
+                                        },
+                                      ))
+                                ],
+                              ),
+                            ),
+                          )
+                        : Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14.0),
+                            ),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            color: Style.Colors.colorWhite,
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  14, 14, 14, 14),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, -1),
+                                    child: Text(
+                                      'Anda berada di ${user.name} pada ${new Jiffy(user.checkin_date).format("MMMM d yyyy, h:mm:ss a")}',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Align(
+                                      alignment: AlignmentDirectional(-1, 0),
+                                      child: RaisedButton(
+                                        child: Text('Detail'),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CheckInDetailScreen()));
+                                        },
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PlaceHistoryScreen()));
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.network(
+                          'https://ik.imagekit.io/ewtwef9bw9x/barcode_8vxiQahO8.png?updatedAt=1637591625324',
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Riwayat\nCheck-In',
+                          style: TextStyle(fontSize: 12),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ShuttleScreen()));
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.network(
+                          'https://ik.imagekit.io/ewtwef9bw9x/route_qdtFJZWKy.png?updatedAt=1637591625125',
+                          width: 30,
+                          height: 30,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Suttle\nBus',
+                          style: TextStyle(fontSize: 12),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.network(
+                        'https://ik.imagekit.io/ewtwef9bw9x/vaccinated_JOQ5KjhWq.png?updatedAt=1637591625081',
+                        width: 30,
+                        height: 30,
+                        fit: BoxFit.cover,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Hasil\nTes Covid',
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.network(
+                        'https://ik.imagekit.io/ewtwef9bw9x/online-support_XZl_4jUWRH3.png?updatedAt=1637592153039',
+                        width: 30,
+                        height: 30,
+                        fit: BoxFit.cover,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Crisis\nCenter',
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.network(
+                        'https://ik.imagekit.io/ewtwef9bw9x/bell_1JDM-Zglf.png?updatedAt=1637592153207',
+                        width: 30,
+                        height: 30,
+                        fit: BoxFit.cover,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'Info\nPublik',
+                        style: TextStyle(fontSize: 12),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
   Widget _buildUserStatusLoaded(
       BuildContext context, UserStatusModel user, bool isCheckin) {
-    var date = null;
-
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          isCheckin
-              ? Card(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  color: Color(0xFFF5F5F5),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(-1, -1),
-                          child: Text(
-                            'Silahkan Check-IN',
-                          ),
-                        ),
-                        Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: RaisedButton(
-                              child: Text('ChekIn'),
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pushReplacement(MaterialPageRoute(
-                                  builder: (context) => const CheckInScanner(),
-                                ));
-                              },
-                            ))
+    return Column(
+      children: <Widget>[
+        Stack(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  height: 130 + MediaQuery.of(context).viewPadding.top,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <Color>[
+                        Color(0xFF138880),
+                        Color(0xFF1C9E82),
                       ],
                     ),
                   ),
-                )
-              : Card(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  color: Color(0xFFF5F5F5),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(-1, -1),
-                          child: Text(
-                            'Anda berada di ${user.name} pada ${new Jiffy(user.checkin_date).format("MMMM d yyyy, h:mm:ss a")}',
-                          ),
-                        ),
-                        Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: RaisedButton(
-                              child: Text('Detail'),
-                              onPressed: () {
-                                // Navigator.of(context).push(
-                                //     MaterialPageRoute<PlaceBloc>(
-                                //         builder: (_) => BlocProvider.value(
-                                //             value: BlocProvider.of<PlaceBloc>(
-                                //                     context)
-                                //                 .add(CheckOut()))));
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CheckInDetailScreen()));
-                              },
-                            ))
-                      ],
-                    ),
-                  ),
-                )
-        ],
-      ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ],
+        )
+      ],
     );
+    return SafeArea(
+        child: Column(
+      children: [
+        Container(
+          child: Column(
+            children: [
+              isCheckin
+                  ? Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      color: Color(0xFFF5F5F5),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-1, -1),
+                              child: Text(
+                                'Silahkan Check-IN',
+                              ),
+                            ),
+                            Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: RaisedButton(
+                                  child: Text('ChekIn'),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CheckInScanner(),
+                                    ));
+                                  },
+                                ))
+                          ],
+                        ),
+                      ),
+                    )
+                  : Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      color: Color(0xFFF5F5F5),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-1, -1),
+                              child: Text(
+                                'Anda berada di ${user.name} pada ${new Jiffy(user.checkin_date).format("MMMM d yyyy, h:mm:ss a")}',
+                              ),
+                            ),
+                            Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: RaisedButton(
+                                  child: Text('Detail'),
+                                  onPressed: () {
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute<PlaceBloc>(
+                                    //         builder: (_) => BlocProvider.value(
+                                    //             value: BlocProvider.of<PlaceBloc>(
+                                    //                     context)
+                                    //                 .add(CheckOut()))));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CheckInDetailScreen()));
+                                  },
+                                ))
+                          ],
+                        ),
+                      ),
+                    ),
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 //   @override
 //   Widget build(BuildContext context) {

@@ -3,21 +3,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:limuny/bloc/place/history/history_bloc.dart';
 import 'package:limuny/bloc/place/history/history_event.dart';
 import 'package:limuny/bloc/place/history/history_state.dart';
+import 'package:limuny/bloc/shuttle/shuttle_bloc.dart';
+import 'package:limuny/bloc/shuttle/shuttle_event.dart';
+import 'package:limuny/bloc/shuttle/shuttle_state.dart';
 import 'package:limuny/model/PlaceHistoryModel.dart';
+import 'package:limuny/model/ShuttleModel.dart';
 
-class PlaceHistoryScreen extends StatefulWidget {
-  const PlaceHistoryScreen({Key? key}) : super(key: key);
+class ShuttleFilterScreen extends StatefulWidget {
+  final String start;
+  final String destination;
+  const ShuttleFilterScreen(
+      {Key? key, required this.start, required this.destination})
+      : super(key: key);
 
   @override
-  _PlaceHistoryScreenState createState() => _PlaceHistoryScreenState();
+  _ShuttleFilterScreenState createState() => _ShuttleFilterScreenState();
 }
 
-class _PlaceHistoryScreenState extends State<PlaceHistoryScreen> {
-  final PlaceHistoryBloc _placeHistoryBloc = PlaceHistoryBloc();
+class _ShuttleFilterScreenState extends State<ShuttleFilterScreen> {
+  final ShuttleBloc _shuttleBloc = ShuttleBloc();
 
   @override
   void initState() {
-    _placeHistoryBloc.add(GetPlaceHistory());
+    _shuttleBloc
+        .add(GetShuttle(start: widget.start, destination: widget.destination));
     super.initState();
   }
 
@@ -25,7 +34,7 @@ class _PlaceHistoryScreenState extends State<PlaceHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Place History"),
+        title: Text("Shuttle Bus"),
       ),
       body: _buildPlaceHistory(),
     );
@@ -35,10 +44,10 @@ class _PlaceHistoryScreenState extends State<PlaceHistoryScreen> {
     return Container(
       margin: EdgeInsets.all(8.0),
       child: BlocProvider(
-        create: (_) => _placeHistoryBloc,
-        child: BlocListener<PlaceHistoryBloc, PlaceHistoryState>(
+        create: (_) => _shuttleBloc,
+        child: BlocListener<ShuttleBloc, ShuttleState>(
           listener: (context, state) {
-            if (state is PlaceHistoryFailure) {
+            if (state is ShuttleFailure) {
               Scaffold.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.error),
@@ -46,15 +55,15 @@ class _PlaceHistoryScreenState extends State<PlaceHistoryScreen> {
               );
             }
           },
-          child: BlocBuilder<PlaceHistoryBloc, PlaceHistoryState>(
+          child: BlocBuilder<ShuttleBloc, ShuttleState>(
             builder: (context, state) {
-              if (state is PlaceHistoryInitial) {
+              if (state is ShuttleInital) {
                 return _buildLoading();
-              } else if (state is PlaceHistoryLoading) {
+              } else if (state is ShuttleLoading) {
                 return _buildLoading();
-              } else if (state is PlaceHistoryLoaded) {
-                return _buildHistoryLoaded(context, state.history);
-              } else if (state is PlaceHistoryFailure) {
+              } else if (state is ShuttleLoaded) {
+                return _buildHistoryLoaded(context, state.shuttle);
+              } else if (state is ShuttleFailure) {
                 return Container();
               }
               return Container();
@@ -66,7 +75,7 @@ class _PlaceHistoryScreenState extends State<PlaceHistoryScreen> {
   }
 
   Widget _buildHistoryLoaded(
-      BuildContext context, List<Datum> placeHistoryModel) {
+      BuildContext context, List<Bus> placeHistoryModel) {
     return ListView.builder(
       itemCount: placeHistoryModel.length,
       itemBuilder: (context, index) {
@@ -77,10 +86,11 @@ class _PlaceHistoryScreenState extends State<PlaceHistoryScreen> {
               margin: EdgeInsets.all(8.0),
               child: Column(
                 children: <Widget>[
-                  Text("Tempat : ${placeHistoryModel[index].name}"),
-                  Text("Tipe : ${placeHistoryModel[index].type}"),
-                  Text("Check-In : ${placeHistoryModel[index].checkInTime}"),
-                  Text("Check-Out: ${placeHistoryModel[index].checkOutTime}")
+                  Text("Code : ${placeHistoryModel[index].code}"),
+                  Text("Destination : ${placeHistoryModel[index].destination}"),
+                  Text("From : ${placeHistoryModel[index].start}"),
+                  Text(
+                      "Departure Time: ${placeHistoryModel[index].departureTime}")
                 ],
               ),
             ),

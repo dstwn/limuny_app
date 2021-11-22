@@ -106,4 +106,4 @@ class UserRepository {
   }
 }
 
-class NetworkError extends Error {}
+class UserNetworkError extends Error {}
