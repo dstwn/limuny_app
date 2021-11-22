@@ -9,6 +9,7 @@ import 'package:limuny/model/CheckInModel.dart';
 import 'package:limuny/model/CheckOutModel.dart';
 import 'package:limuny/model/PlaceModel.dart';
 import 'package:limuny/styles/animation.dart';
+import 'package:limuny/ui/home/home_screen.dart';
 import 'package:qr_code_scanner/src/types/barcode.dart';
 import 'package:limuny/styles/theme.dart' as Style;
 
@@ -86,7 +87,7 @@ class _ConfirmationPlaceScreenState extends State<ConfirmationPlaceScreen> {
             top: 0,
             left: 0,
             right: 0,
-            //height: 500,
+            height: mediaQuery.size.height / 3,
             child: FadeAnimation(
               1.2,
               Container(
@@ -570,7 +571,11 @@ class _ConfirmationPlaceScreenState extends State<ConfirmationPlaceScreen> {
                           size: 20,
                         ),
                         onPressed: () async {
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => new MainScreen()),
+                          );
                         },
                       ),
                     )

@@ -1,3 +1,4 @@
+import 'package:limuny/bloc/auth/auth.dart';
 import 'package:limuny/bloc/login/login_bloc.dart';
 import 'package:limuny/bloc/register/register_bloc.dart';
 import 'package:limuny/bloc/register/register_event.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:limuny/styles/theme.dart' as Style;
 import 'package:limuny/ui/auth/login/login_screen.dart';
+import 'package:limuny/ui/home/home_screen.dart';
 import 'package:limuny/widgets/custom_button.dart';
 import 'package:limuny/widgets/custom_checkbox.dart';
 

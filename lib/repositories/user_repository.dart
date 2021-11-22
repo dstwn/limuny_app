@@ -4,7 +4,11 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:dio/src/options.dart' as Opt;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:limuny/model/CheckOutModel.dart';
+import 'package:limuny/model/PlaceHistoryModel.dart';
 import 'package:limuny/model/UserModel.dart';
+import 'package:limuny/model/UserStatusModel.dart';
+import 'package:limuny/provider/place_provider.dart';
 import 'package:limuny/provider/user_provider.dart';
 
 class UserRepository {
@@ -13,6 +17,7 @@ class UserRepository {
   var profileUrl = '$mainUrl/api/profile';
   var registerUrl = '$mainUrl/api/register';
   final _userProvider = UserProvider();
+  final _placeProvider = PlaceProvider();
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
@@ -86,6 +91,18 @@ class UserRepository {
 
   Future<User>? getUser() {
     return _userProvider.fetchUser();
+  }
+
+  Future<UserStatusModel>? getStatusUser() {
+    return _userProvider.getStatusUser();
+  }
+
+  Future<CheckOutModel>? checkOut() {
+    return _placeProvider.checkOut();
+  }
+
+  Future<List<Datum>> getHistoryPlace() {
+    return _userProvider.getPlaceHistoryUser();
   }
 }
 

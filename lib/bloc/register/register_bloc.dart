@@ -28,7 +28,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             event.nik,
             event.major,
             event.phone);
-        authenticationBloc.add(LoggedIn(token: token));
+        authenticationBloc.add(Registered(token: token));
         yield RegisterInitial();
       } catch (error) {
         yield RegisterFailure(error: error.toString());
