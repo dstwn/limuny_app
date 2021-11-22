@@ -4,6 +4,7 @@ import 'package:limuny/bloc/place/history/history_bloc.dart';
 import 'package:limuny/bloc/place/history/history_event.dart';
 import 'package:limuny/bloc/place/history/history_state.dart';
 import 'package:limuny/model/PlaceHistoryModel.dart';
+import 'package:limuny/styles/theme.dart' as Style;
 
 class PlaceHistoryScreen extends StatefulWidget {
   const PlaceHistoryScreen({Key? key}) : super(key: key);
@@ -25,6 +26,7 @@ class _PlaceHistoryScreenState extends State<PlaceHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Style.Colors.mainColor,
         title: Text("Place History"),
       ),
       body: _buildPlaceHistory(),

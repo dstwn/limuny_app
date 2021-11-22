@@ -8,6 +8,7 @@ import 'package:limuny/bloc/shuttle/shuttle_event.dart';
 import 'package:limuny/bloc/shuttle/shuttle_state.dart';
 import 'package:limuny/model/PlaceHistoryModel.dart';
 import 'package:limuny/model/ShuttleModel.dart';
+import 'package:limuny/styles/theme.dart' as Style;
 
 class ShuttleFilterScreen extends StatefulWidget {
   final String start;
@@ -34,6 +35,7 @@ class _ShuttleFilterScreenState extends State<ShuttleFilterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Style.Colors.mainColor,
         title: Text("Shuttle Bus"),
       ),
       body: _buildPlaceHistory(),
