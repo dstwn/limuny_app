@@ -16,7 +16,7 @@ class PlaceBloc extends Bloc<PlaceEvent, PlaceState> {
         yield PlaceLoading();
         final _place = await _placeRepository.getPlace(event.uuid);
         yield PlaceLoaded(_place!);
-      } on NetworkError {
+      } catch (err) {
         yield PlaceFailure(error: "Network Error");
       }
     } else if (event is CheckIn) {
@@ -24,7 +24,7 @@ class PlaceBloc extends Bloc<PlaceEvent, PlaceState> {
         yield CheckInLoading();
         final _checkin = await _placeRepository.checkIn(event.uuid);
         yield CheckInLoaded(_checkin!);
-      } on NetworkError {
+      } catch (err) {
         yield CheckInFailure(error: "Network Error");
       }
     } else if (event is CheckOut) {
@@ -32,7 +32,7 @@ class PlaceBloc extends Bloc<PlaceEvent, PlaceState> {
         yield CheckInLoading();
         final _checkOut = await _placeRepository.checkOut();
         yield CheckOutLoaded(_checkOut!);
-      } on NetworkError {
+      } catch (err) {
         yield CheckInFailure(error: "Network Error");
       }
     }

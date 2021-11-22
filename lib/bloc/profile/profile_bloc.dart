@@ -17,7 +17,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         yield ProfileLoading();
         final _user = await _userRepository.getUser();
         yield ProfileLoaded(_user!);
-      } on UserNetworkError {
+      } catch (err) {
         yield ProfileFailure(error: "Network Error");
       }
     }

@@ -64,7 +64,7 @@ class _ShuttleFilterScreenState extends State<ShuttleFilterScreen> {
               } else if (state is ShuttleLoaded) {
                 return _buildHistoryLoaded(context, state.shuttle);
               } else if (state is ShuttleFailure) {
-                return Container();
+                return _buildLoading();
               }
               return Container();
             },

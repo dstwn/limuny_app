@@ -10,7 +10,7 @@ class ShuttleScreen extends StatefulWidget {
 }
 
 class _ShuttleScreenState extends State<ShuttleScreen> {
-  List _shuttle = ['Kampus Pusat', 'Kampus Wates', 'Kampus Gunungkidul'];
+  List _shuttle = ['Karang Malang', 'Wates', 'Gunungkidul'];
   var _start;
   var _destination;
   @override

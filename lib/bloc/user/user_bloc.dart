@@ -17,7 +17,7 @@ class UserStatusBloc extends Bloc<UserStatusEvent, UserStatusState> {
         yield UserStatusLoading();
         final _user = await _userRepository.getStatusUser();
         yield UserStatusLoaded(_user!);
-      } on NetworkError {
+      } catch (err) {
         yield UserStatusFailure(error: "Network Error");
       }
     } else if (event is UserCheckOut) {
@@ -25,7 +25,7 @@ class UserStatusBloc extends Bloc<UserStatusEvent, UserStatusState> {
         yield UserCheckOutLoading();
         final _checkOut = await _userRepository.checkOut();
         yield UserCheckOutLoaded(_checkOut!);
-      } on NetworkError {
+      } catch (err) {
         yield UserCheckOutFailure(error: "Failed CheckOut");
       }
     }

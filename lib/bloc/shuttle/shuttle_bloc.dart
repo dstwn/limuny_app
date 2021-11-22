@@ -6,7 +6,7 @@ import 'package:limuny/repositories/shuttle_repository.dart';
 import 'package:limuny/repositories/user_repository.dart';
 
 class ShuttleBloc extends Bloc<ShuttleEvent, ShuttleState> {
-  late final ShuttleRepository _shuttleRepository;
+  final ShuttleRepository _shuttleRepository = ShuttleRepository();
   @override
   ShuttleState get initialState => const ShuttleInital();
 
@@ -18,8 +18,8 @@ class ShuttleBloc extends Bloc<ShuttleEvent, ShuttleState> {
         final _shuttle = await _shuttleRepository.getShuttles(
             event.start, event.destination);
         yield ShuttleLoaded(shuttle: _shuttle);
-      } on OnNetworkError {
-        yield const ShuttleFailure(error: "Network");
+      } catch (err) {
+        yield ShuttleFailure(error: err.toString());
       }
     }
   }

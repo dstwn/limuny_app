@@ -18,8 +18,8 @@ class PlaceHistoryBloc extends Bloc<PlaceHistoryEvent, PlaceHistoryState> {
         yield PlaceHistoryLoading();
         List<Datum> _place = await _userRepository.getHistoryPlace();
         yield PlaceHistoryLoaded(history: _place);
-      } on UserNetworkError {
-        yield const PlaceHistoryFailure(error: "error");
+      } catch (err) {
+        yield const PlaceHistoryFailure(error: "err");
       }
     }
   }
