@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:limuny/bloc/place/place_state.dart';
 import 'package:limuny/bloc/shuttle/shuttle_event.dart';
@@ -20,6 +22,14 @@ class ShuttleBloc extends Bloc<ShuttleEvent, ShuttleState> {
         yield ShuttleLoaded(shuttle: _shuttle);
       } catch (err) {
         yield ShuttleFailure(error: err.toString());
+      }
+    } else if (event is GetDetailShuttle) {
+      try {
+        yield ShuttleDetailLoading();
+        final _shuttle = await _shuttleRepository.getShuttleDetail(event.uuid);
+        yield ShuttleDetailLoaded(shuttleDetailModel: _shuttle);
+      } catch (err) {
+        yield ShuttleDetailFailure(error: err.toString());
       }
     }
   }

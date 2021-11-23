@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:limuny/model/ShuttleDetailModel.dart';
 import 'package:limuny/model/ShuttleHistoryModel.dart';
 import 'package:limuny/model/ShuttleModel.dart';
 
@@ -42,6 +43,32 @@ class ShuttleProvider {
       print(
           "Exception occured: $error stackTrace: $stacktrace token : $userToken");
       return <BusItem>[];
+    }
+  }
+
+  Future<ShuttleDetailModel> getDetailShuttle(String uuid) async {
+    String userToken = await storage.read(key: 'token');
+    var placeUrl = '$mainUrl/api/checkin/bus/$uuid';
+    try {
+      _dio.options.headers["authorization"] = 'Bearer $userToken';
+      Response response = await _dio.get(placeUrl);
+      print('Place URL :  $placeUrl');
+      print("User Token : $userToken");
+      print("Data : $response.data");
+      return ShuttleDetailModel.fromJson(response.data['data']);
+    } catch (error, stacktrace) {
+      print(
+          "Exception occured: $error stackTrace: $stacktrace token : $userToken");
+      return ShuttleDetailModel(
+          id: 0,
+          code: "code",
+          uuid: "uuid",
+          qrImage: "qrImage",
+          capacity: 0,
+          quantity: 0,
+          start: "start",
+          destination: "destination",
+          departureTime: "departureTime");
     }
   }
 }

@@ -44,9 +44,8 @@ class _IntroPageState extends State<IntroPage> {
           )
         ],
       ),
-      body:
-          "Enter a BuildingEnter a BuildingEnter a BuildingEnter a BuildingEnter a BuildingEnter a Building.",
-      image: Center(child: SvgPicture.asset("assets/icons/gift.svg")),
+      body: "Masuk gedung dengan mudah dan Aman",
+      image: Container(),
       decoration: const PageDecoration(
           pageColor: Colors.white,
           bodyTextStyle: TextStyle(
@@ -60,7 +59,7 @@ class _IntroPageState extends State<IntroPage> {
       titleWidget: Column(
         children: <Widget>[
           Text(
-            'SUTTLE BUS INTEGRATION',
+            'Shuttle Bus Integration',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 18.0,
@@ -79,8 +78,7 @@ class _IntroPageState extends State<IntroPage> {
           )
         ],
       ),
-      body:
-          "A payment gateway as a merchant service that processes credit card payments for ecommerce sites and traditional brick and mortar stores.",
+      body: "Cari Bus dari mana dan kemana dengan Mudah",
       image: Center(
           child: SizedBox(
         width: 450.0,
@@ -99,7 +97,7 @@ class _IntroPageState extends State<IntroPage> {
       titleWidget: Column(
         children: <Widget>[
           Text(
-            'SELF REPORT',
+            'Super App',
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
           ),
           SizedBox(
@@ -114,8 +112,7 @@ class _IntroPageState extends State<IntroPage> {
           )
         ],
       ),
-      body:
-          "Call center gives a small business a big business feel. 24-hour sales, order entry, payment processing, billing inquiries, and more.",
+      body: "Nantikan UNY Super App",
       image: Center(
           child: SizedBox(
         width: 450.0,

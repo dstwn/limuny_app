@@ -16,3 +16,11 @@ class GetShuttle extends ShuttleEvent {
   String toString() =>
       'Get Shuttle Log { start: $start, destination: $destination }';
 }
+
+class GetDetailShuttle extends ShuttleEvent {
+  final String uuid;
+  const GetDetailShuttle({required this.uuid});
+  @override
+  // TODO: implement props
+  List<Object>? get props => [uuid];
+}

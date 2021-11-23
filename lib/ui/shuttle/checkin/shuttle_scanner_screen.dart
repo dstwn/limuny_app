@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:limuny/ui/place/checkin_confirmation_screen.dart';
+import 'package:limuny/ui/shuttle/checkin/shuttle_confirmation_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:limuny/styles/theme.dart' as Style;
 
@@ -33,7 +34,7 @@ class _CheckInScannerScanner extends State<CheckInShuttleScanner> {
   @override
   Widget build(BuildContext context) {
     if (result != null) {
-      return ConfirmationPlaceScreen(uuid: result!.code);
+      return ConfirmationShuttle(uuid: result!.code);
     } else {
       return Scaffold(
         body: Column(

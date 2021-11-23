@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:limuny/model/ShuttleDetailModel.dart';
 import 'package:limuny/model/ShuttleModel.dart';
 
 abstract class ShuttleState extends Equatable {
@@ -35,4 +36,32 @@ class ShuttleLoaded extends ShuttleState {
   String toString() => 'HistoryLoaded { data: $shuttle }';
   @override
   List<Object> get props => [shuttle];
+}
+
+class ShuttleDetailInitial extends ShuttleState {
+  const ShuttleDetailInitial();
+  @override
+  List<Object> get props => [];
+}
+
+class ShuttleDetailLoading extends ShuttleState {
+  const ShuttleDetailLoading();
+  @override
+  List<Object> get props => [];
+}
+
+class ShuttleDetailFailure extends ShuttleState {
+  final String error;
+  const ShuttleDetailFailure({required this.error});
+  @override
+  List<Object> get props => [error];
+  @override
+  String toString() => 'Loaded Shuttle Failure { error: $error }';
+}
+
+class ShuttleDetailLoaded extends ShuttleState {
+  final ShuttleDetailModel shuttleDetailModel;
+  const ShuttleDetailLoaded({required this.shuttleDetailModel});
+  @override
+  List<Object> get props => [shuttleDetailModel];
 }
