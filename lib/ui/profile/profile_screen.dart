@@ -26,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Style.Colors.mainColor,
         title: Text("Profile"),
         actions: [
           IconButton(

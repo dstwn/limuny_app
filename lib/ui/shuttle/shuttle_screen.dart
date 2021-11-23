@@ -1,6 +1,10 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:limuny/styles/theme.dart' as Style;
 import 'package:limuny/ui/shuttle/shuttle_filter_screen.dart';
+import 'package:limuny/ui/shuttle/shuttle_history_screen.dart';
+
+import 'checkin/shuttle_scanner_screen.dart';
 
 class ShuttleScreen extends StatefulWidget {
   const ShuttleScreen({Key? key}) : super(key: key);
@@ -23,6 +27,19 @@ class _ShuttleScreenState extends State<ShuttleScreen> {
           backgroundColor: Style.Colors.mainColor,
           title: Text("Shuttle Bus"),
           automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+                icon: Icon(
+                  EvaIcons.clockOutline,
+                  color: Style.Colors.colorWhite,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ShuttelHistoryScreen()));
+                }),
+          ],
         ),
       ),
       body: _buildHomeMenus(),
@@ -68,7 +85,13 @@ class _ShuttleScreenState extends State<ShuttleScreen> {
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: RaisedButton(
                                   child: Text('Chek-In'),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                      builder: (context) =>
+                                          CheckInShuttleScanner(),
+                                    ));
+                                  },
                                 )),
                           ],
                         ),
